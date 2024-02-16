@@ -1,0 +1,21 @@
+--- 
+title: "Development of an Application Programming Interface (API) to automate downloading and processing of precision livestock data"
+author: "Jameson R. Brennan1, Ira Parsons1*, Meredith Harrison2, and Hector Menendez III1"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  The overall goal of this code was to develop open-source tools that overcome 
+  the largest barrier to PLT implementation and use, which is rapid and repeatable 
+  PLT data access, system tracking, and descriptive statistics.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# About  
+
+Advances in sensor technology have ushered in the ability to collect vast amounts of data in real-time for animal production systems. Though there is much promise in improving animal monitoring production and research utilizing precision systems, for this technology to be truly impactful, data generated needs to accessed and processed in near real time for relevant decision making. In this paper, three application programming interfaces were developed to facilitate near-real time data access. In addition open-source tutorials were developed to generate summary statistics of three precision livestock technologies and systems checks to ensure equipment is working properly and animal adoption rates of technology are adequate for data collection. The development of data processing outlined in this paper will be essential for successful implementation of precision technology and integration of data in real time with animal nutrition or decision making algorithms.
+

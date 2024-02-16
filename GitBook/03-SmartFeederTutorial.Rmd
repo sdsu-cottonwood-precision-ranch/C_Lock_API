@@ -1,13 +1,3 @@
----
-title: "C-Lock SmartFeeder Tutorial"
-author: ''
-date: ''
-output:
-  html_document: default
-  pdf_document: default
----
-
-
 # Downloading and Processing C-Lock SmartFeeder Data in R  
 Developed by Jameson Brennan, Ira Parsons, and Hector Menendez  
 Department of Animal Science, South Dakota State University  
