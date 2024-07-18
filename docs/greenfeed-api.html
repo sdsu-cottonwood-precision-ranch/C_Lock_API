@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 GreenFeed API | _main.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 GreenFeed API | _main.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 GreenFeed API | _main.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="smartscale-api.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>C-Lock Application Program Interfaces</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#abstract"><i class="fa fa-check"></i><b>0.1</b> Abstract</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="greenfeed-api.html"><a href="greenfeed-api.html"><i class="fa fa-check"></i><b>1</b> GreenFeed API</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="greenfeed-api.html"><a href="greenfeed-api.html#api"><i class="fa fa-check"></i><b>1.1</b> API</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="greenfeed-api.html"><a href="greenfeed-api.html#data-download"><i class="fa fa-check"></i><b>1.1.1</b> Data Download</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="greenfeed-api.html"><a href="greenfeed-api.html#data-visualization"><i class="fa fa-check"></i><b>1.2</b> Data Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="smartscale-api.html"><a href="smartscale-api.html"><i class="fa fa-check"></i><b>2</b> SmartScale API</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="smartscale-api.html"><a href="smartscale-api.html#api-1"><i class="fa fa-check"></i><b>2.1</b> API</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="smartscale-api.html"><a href="smartscale-api.html#libraries"><i class="fa fa-check"></i><b>2.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="2.1.2" data-path="smartscale-api.html"><a href="smartscale-api.html#login-variables"><i class="fa fa-check"></i><b>2.1.2</b> Login Variables</a></li>
+<li class="chapter" data-level="2.1.3" data-path="smartscale-api.html"><a href="smartscale-api.html#data-download-1"><i class="fa fa-check"></i><b>2.1.3</b> Data Download</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="smartscale-api.html"><a href="smartscale-api.html#data-processing"><i class="fa fa-check"></i><b>2.2</b> Data Processing</a></li>
+<li class="chapter" data-level="2.3" data-path="smartscale-api.html"><a href="smartscale-api.html#data-visualization-1"><i class="fa fa-check"></i><b>2.3</b> Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="smartscale-api.html"><a href="smartscale-api.html#further-data-cleaning-and-filtering"><i class="fa fa-check"></i><b>2.3.1</b> Further Data Cleaning and Filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="smartscale-api.html"><a href="smartscale-api.html#animal-performance"><i class="fa fa-check"></i><b>2.4</b> Animal Performance</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html"><i class="fa fa-check"></i><b>3</b> SmartFeeder API</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#api-2"><i class="fa fa-check"></i><b>3.1</b> API</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#libraries-1"><i class="fa fa-check"></i><b>3.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="3.1.2" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#login-credentials"><i class="fa fa-check"></i><b>3.1.2</b> Login credentials</a></li>
+<li class="chapter" data-level="3.1.3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#report-paramters"><i class="fa fa-check"></i><b>3.1.3</b> Report paramters</a></li>
+<li class="chapter" data-level="3.1.4" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#data-download-2"><i class="fa fa-check"></i><b>3.1.4</b> Data Download</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeeder-data-processing"><i class="fa fa-check"></i><b>3.2</b> SmartFeeder Data Processing</a></li>
+<li class="chapter" data-level="3.3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeedert-data-visualization"><i class="fa fa-check"></i><b>3.3</b> SmartFeedert Data Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>4</b> References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="greenfeed-api" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> GreenFeed API<a href="greenfeed-api.html#greenfeed-api" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Developed by Jameson Brennan, Ira Parsons, and Hector Menendez</em>
+<em>Department of Animal Science, South Dakota State University</em></p>
+<p>The objectives of this markdown document is to automate the download and visualization of Greenfeed data provided by C-Lock. Users will need to provide their own login credentials to run the code. This markdown can be used to quickly visualize usage of Greenfeed machines and preliminary data.</p>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>. When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. The example below will print a statement and run a quick computation.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="greenfeed-api.html#cb1-1" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="greenfeed-api.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div id="api" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> API<a href="greenfeed-api.html#api" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first thing you need to do is to enter your variables for the code to run. In the quotations below you will need to change the username, password, FID (or greenfeed ID), and the start and end times for the data you want to download.</p>
+<p>Two things to note are 1) you can enter multiple greenfeeds assocated with an account and 2) the start time and end time must be in the same format. The chunk below sets the end time to the computer time for the most recent downloads.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="greenfeed-api.html#cb2-1" tabindex="-1"></a><span class="co">#change to login user name </span></span>
+<span id="cb2-2"><a href="greenfeed-api.html#cb2-2" tabindex="-1"></a>USER <span class="ot">&lt;-</span> <span class="st">&quot;username&quot;</span></span>
+<span id="cb2-3"><a href="greenfeed-api.html#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="greenfeed-api.html#cb2-4" tabindex="-1"></a><span class="co">#Change to login password</span></span>
+<span id="cb2-5"><a href="greenfeed-api.html#cb2-5" tabindex="-1"></a>PASS <span class="ot">&lt;-</span> <span class="st">&#39;Password&#39;</span></span>
+<span id="cb2-6"><a href="greenfeed-api.html#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="greenfeed-api.html#cb2-7" tabindex="-1"></a><span class="co">#Change to greenfeed id or id&#39;s. The second line can be uncommented out for multiple greenfeeds</span></span>
+<span id="cb2-8"><a href="greenfeed-api.html#cb2-8" tabindex="-1"></a>FID  <span class="ot">&lt;-</span> <span class="st">&quot;541&quot;</span></span>
+<span id="cb2-9"><a href="greenfeed-api.html#cb2-9" tabindex="-1"></a><span class="co">#FID  &lt;- &quot;541,539,535,534&quot;</span></span>
+<span id="cb2-10"><a href="greenfeed-api.html#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="greenfeed-api.html#cb2-11" tabindex="-1"></a><span class="co">#enter the start date (ST) and end date (ET) for the data you want to download</span></span>
+<span id="cb2-12"><a href="greenfeed-api.html#cb2-12" tabindex="-1"></a>ST   <span class="ot">&lt;-</span> <span class="st">&quot;yyyy-mm-dd&quot;</span></span>
+<span id="cb2-13"><a href="greenfeed-api.html#cb2-13" tabindex="-1"></a>ET   <span class="ot">&lt;-</span>  <span class="st">&quot;yyyy-mm-dd&quot;</span></span></code></pre></div>
+<div id="data-download" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Data Download<a href="greenfeed-api.html#data-download" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This code chunk will pull the data from the cloud based on the specifications of what was provided above.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="greenfeed-api.html#cb3-1" tabindex="-1"></a><span class="co"># Spaces must be replaced with %20</span></span>
+<span id="cb3-2"><a href="greenfeed-api.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="greenfeed-api.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="greenfeed-api.html#cb3-4" tabindex="-1"></a><span class="fu">library</span>(httr) <span class="co"># Must first install  httr with:   install.packages(&quot;httr&quot;)</span></span>
+<span id="cb3-5"><a href="greenfeed-api.html#cb3-5" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb3-6"><a href="greenfeed-api.html#cb3-6" tabindex="-1"></a><span class="co"># First Authenticate to receive token:</span></span>
+<span id="cb3-7"><a href="greenfeed-api.html#cb3-7" tabindex="-1"></a>req <span class="ot">&lt;-</span> <span class="fu">POST</span>(<span class="st">&quot;https://portal.c-lockinc.com/api/login&quot;</span>, <span class="at">body=</span><span class="fu">list</span>(<span class="at">user=</span>USER, <span class="at">pass=</span>PASS))</span>
+<span id="cb3-8"><a href="greenfeed-api.html#cb3-8" tabindex="-1"></a><span class="fu">stop_for_status</span>(req)</span>
+<span id="cb3-9"><a href="greenfeed-api.html#cb3-9" tabindex="-1"></a>TOK <span class="ot">&lt;-</span> <span class="fu">trimws</span>(<span class="fu">content</span>(req))</span>
+<span id="cb3-10"><a href="greenfeed-api.html#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="greenfeed-api.html#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="greenfeed-api.html#cb3-12" tabindex="-1"></a><span class="co">#URL=&quot;https://portal.c-lockinc.com/api/getemissions?d=visits&amp;fids=297,298&amp;st=2023-06-06%2000:00:00&amp;et=2023-06-14%2012:00:00&quot;</span></span>
+<span id="cb3-13"><a href="greenfeed-api.html#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="greenfeed-api.html#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="greenfeed-api.html#cb3-15" tabindex="-1"></a><span class="co"># Now get data using the login token</span></span>
+<span id="cb3-16"><a href="greenfeed-api.html#cb3-16" tabindex="-1"></a>URL<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;https://portal.c-lockinc.com/api/getemissions?d=visits&amp;fids=&quot;</span>, FID, <span class="st">&quot;&amp;st=&quot;</span>, ST, <span class="st">&quot;&amp;et=&quot;</span>, ET, <span class="st">&quot;%2012:00:00&quot;</span>)</span>
+<span id="cb3-17"><a href="greenfeed-api.html#cb3-17" tabindex="-1"></a>req <span class="ot">&lt;-</span> <span class="fu">POST</span>(URL, <span class="at">body=</span><span class="fu">list</span>(<span class="at">token=</span>TOK))</span>
+<span id="cb3-18"><a href="greenfeed-api.html#cb3-18" tabindex="-1"></a><span class="fu">stop_for_status</span>(req)</span>
+<span id="cb3-19"><a href="greenfeed-api.html#cb3-19" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="greenfeed-api.html#cb3-20" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">content</span>(req)</span>
+<span id="cb3-21"><a href="greenfeed-api.html#cb3-21" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="greenfeed-api.html#cb3-22" tabindex="-1"></a><span class="co">#Split the lines</span></span>
+<span id="cb3-23"><a href="greenfeed-api.html#cb3-23" tabindex="-1"></a>perline <span class="ot">&lt;-</span> <span class="fu">str_split</span>(a, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb3-24"><a href="greenfeed-api.html#cb3-24" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="greenfeed-api.html#cb3-25" tabindex="-1"></a><span class="co">#Split the commas into a dataframe, while getting rid of the &quot;Parameters&quot; line and the headers line</span></span>
+<span id="cb3-26"><a href="greenfeed-api.html#cb3-26" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(<span class="st">&quot;rbind&quot;</span>, <span class="fu">str_split</span>(perline[<span class="dv">3</span><span class="sc">:</span><span class="fu">length</span>(perline)], <span class="st">&quot;,&quot;</span>))</span>
+<span id="cb3-27"><a href="greenfeed-api.html#cb3-27" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">as.data.frame</span>(df)</span>
+<span id="cb3-28"><a href="greenfeed-api.html#cb3-28" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="greenfeed-api.html#cb3-29" tabindex="-1"></a><span class="fu">colnames</span>(df)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;FeederID&#39;</span>,<span class="st">&#39;AnimalName&#39;</span>,<span class="st">&#39;RFID&#39;</span>,<span class="st">&#39;StartTime&#39;</span>,<span class="st">&#39;EndTime&#39;</span>,<span class="st">&#39;GoodDataDuration&#39;</span>,</span>
+<span id="cb3-30"><a href="greenfeed-api.html#cb3-30" tabindex="-1"></a>                   <span class="st">&#39;CO2GramsPerDay&#39;</span>,<span class="st">&#39;CH4GramsPerDay&#39;</span>,<span class="st">&#39;O2GramsPerDay&#39;</span>,<span class="st">&#39;H2GramsPerDay&#39;</span>,<span class="st">&#39;H2SGramsPerDay&#39;</span>,</span>
+<span id="cb3-31"><a href="greenfeed-api.html#cb3-31" tabindex="-1"></a>                   <span class="st">&#39;AirflowLitersPerSec&#39;</span>,<span class="st">&#39;AirflowCf&#39;</span>,<span class="st">&#39;WindSpeedMetersPerSec&#39;</span>,<span class="st">&#39;WindDirDeg&#39;</span>,<span class="st">&#39;WindCf&#39;</span>,</span>
+<span id="cb3-32"><a href="greenfeed-api.html#cb3-32" tabindex="-1"></a>                   <span class="st">&#39;WasInterrupted&#39;</span>,<span class="st">&#39;InterruptingTags&#39;</span>,<span class="st">&#39;TempPipeDegreesCelsius&#39;</span>,<span class="st">&#39;IsPreliminary&#39;</span>,<span class="st">&#39;RunTime&#39;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="data-visualization" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Data Visualization<a href="greenfeed-api.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This next section is used to generate a series of quick plots to summarize visits and data from the greenfeeds to check usage rates.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="greenfeed-api.html#cb4-1" tabindex="-1"></a><span class="co">#convert start time to date</span></span>
+<span id="cb4-2"><a href="greenfeed-api.html#cb4-2" tabindex="-1"></a>df<span class="sc">$</span>Date<span class="ot">=</span><span class="fu">as.Date</span>(df<span class="sc">$</span>StartTime)</span>
+<span id="cb4-3"><a href="greenfeed-api.html#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="greenfeed-api.html#cb4-4" tabindex="-1"></a>df<span class="sc">$</span>RFID<span class="ot">=</span>stringr<span class="sc">::</span> <span class="fu">str_sub</span>(df<span class="sc">$</span>RFID,<span class="sc">-</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="greenfeed-api.html#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="greenfeed-api.html#cb4-6" tabindex="-1"></a><span class="co">#get a count on the number of good observations by each greenfeed by day</span></span>
+<span id="cb4-7"><a href="greenfeed-api.html#cb4-7" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-8"><a href="greenfeed-api.html#cb4-8" tabindex="-1"></a>daily_good_data<span class="ot">=</span>df <span class="sc">%&gt;%</span> <span class="fu">count</span>(FeederID, Date, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-9"><a href="greenfeed-api.html#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="greenfeed-api.html#cb4-10" tabindex="-1"></a>daily_good_data<span class="ot">=</span><span class="fu">na.omit</span>(daily_good_data)</span>
+<span id="cb4-11"><a href="greenfeed-api.html#cb4-11" tabindex="-1"></a><span class="fu">ggplot</span>(daily_good_data,<span class="fu">aes</span>(<span class="at">x=</span>Date,<span class="at">y=</span>n))<span class="sc">+</span></span>
+<span id="cb4-12"><a href="greenfeed-api.html#cb4-12" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="sc">+</span></span>
+<span id="cb4-13"><a href="greenfeed-api.html#cb4-13" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">breaks =</span> <span class="st">&#39;2 day&#39;</span>)<span class="sc">+</span></span>
+<span id="cb4-14"><a href="greenfeed-api.html#cb4-14" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>FeederID)<span class="sc">+</span></span>
+<span id="cb4-15"><a href="greenfeed-api.html#cb4-15" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&#39;Number of good observations by GF by day&#39;</span>)<span class="sc">+</span></span>
+<span id="cb4-16"><a href="greenfeed-api.html#cb4-16" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;Number of daily observations&#39;</span>)<span class="sc">+</span></span>
+<span id="cb4-17"><a href="greenfeed-api.html#cb4-17" tabindex="-1"></a>  <span class="fu">theme_light</span>()<span class="sc">+</span></span>
+<span id="cb4-18"><a href="greenfeed-api.html#cb4-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="greenfeed-api.html#cb5-1" tabindex="-1"></a><span class="co">#get the number of unique animals visiting by day</span></span>
+<span id="cb5-2"><a href="greenfeed-api.html#cb5-2" tabindex="-1"></a>rfid_day<span class="ot">=</span>df <span class="sc">%&gt;%</span>                              <span class="co"># Applying group_by &amp; summarise</span></span>
+<span id="cb5-3"><a href="greenfeed-api.html#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Date,FeederID) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="greenfeed-api.html#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n_distinct</span>(RFID))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="greenfeed-api.html#cb7-1" tabindex="-1"></a>rfid_day<span class="ot">=</span><span class="fu">na.omit</span>(rfid_day)</span>
+<span id="cb7-2"><a href="greenfeed-api.html#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="greenfeed-api.html#cb7-3" tabindex="-1"></a><span class="fu">ggplot</span>(rfid_day,<span class="fu">aes</span>(<span class="at">x=</span>Date,<span class="at">y=</span>count))<span class="sc">+</span></span>
+<span id="cb7-4"><a href="greenfeed-api.html#cb7-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="sc">+</span></span>
+<span id="cb7-5"><a href="greenfeed-api.html#cb7-5" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>FeederID)<span class="sc">+</span></span>
+<span id="cb7-6"><a href="greenfeed-api.html#cb7-6" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">breaks =</span> <span class="st">&#39;2 day&#39;</span>)<span class="sc">+</span></span>
+<span id="cb7-7"><a href="greenfeed-api.html#cb7-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Number of Unique animals per day&#39;</span>)<span class="sc">+</span></span>
+<span id="cb7-8"><a href="greenfeed-api.html#cb7-8" tabindex="-1"></a>  <span class="fu">theme_light</span>()<span class="sc">+</span></span>
+<span id="cb7-9"><a href="greenfeed-api.html#cb7-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="greenfeed-api.html#cb8-1" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">na.omit</span>(df)</span>
+<span id="cb8-2"><a href="greenfeed-api.html#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="greenfeed-api.html#cb8-3" tabindex="-1"></a>df<span class="sc">$</span>CH4GramsPerDay<span class="ot">=</span><span class="fu">as.numeric</span>(df<span class="sc">$</span>CH4GramsPerDay)</span>
+<span id="cb8-4"><a href="greenfeed-api.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="greenfeed-api.html#cb8-5" tabindex="-1"></a><span class="fu">ggplot</span>(df,<span class="fu">aes</span>(<span class="at">y=</span>CH4GramsPerDay,<span class="at">x=</span>Date))<span class="sc">+</span></span>
+<span id="cb8-6"><a href="greenfeed-api.html#cb8-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> RFID))<span class="sc">+</span></span>
+<span id="cb8-7"><a href="greenfeed-api.html#cb8-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se =</span> F)<span class="sc">+</span></span>
+<span id="cb8-8"><a href="greenfeed-api.html#cb8-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">300</span>)<span class="sc">+</span></span>
+<span id="cb8-9"><a href="greenfeed-api.html#cb8-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Grams CH4 per day, colors individual animals &#39;</span>)<span class="sc">+</span></span>
+<span id="cb8-10"><a href="greenfeed-api.html#cb8-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb8-11"><a href="greenfeed-api.html#cb8-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>))<span class="sc">+</span></span>
+<span id="cb8-12"><a href="greenfeed-api.html#cb8-12" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite outside the scale range (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="greenfeed-api.html#cb12-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="greenfeed-api.html#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;</span> (<span class="fu">max</span>(df<span class="sc">$</span>Date) <span class="sc">-</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="greenfeed-api.html#cb12-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Date, RFID) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="greenfeed-api.html#cb12-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">CH4GramsPerDay =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(CH4GramsPerDay), <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="greenfeed-api.html#cb12-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Date,<span class="at">y=</span>CH4GramsPerDay, <span class="at">fill =</span> RFID))<span class="sc">+</span></span>
+<span id="cb12-6"><a href="greenfeed-api.html#cb12-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb12-7"><a href="greenfeed-api.html#cb12-7" tabindex="-1"></a>  <span class="co"># facet_wrap(~Assignment)+</span></span>
+<span id="cb12-8"><a href="greenfeed-api.html#cb12-8" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb12-9"><a href="greenfeed-api.html#cb12-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>),</span>
+<span id="cb12-10"><a href="greenfeed-api.html#cb12-10" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">linewidth =</span> <span class="fl">0.05</span>),</span>
+<span id="cb12-11"><a href="greenfeed-api.html#cb12-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb12-12"><a href="greenfeed-api.html#cb12-12" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb12-13"><a href="greenfeed-api.html#cb12-13" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="smartscale-api.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
