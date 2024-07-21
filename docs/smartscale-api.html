@@ -218,8 +218,7 @@ div.csl-indent {
 <h1><span class="header-section-number">2</span> SmartScale API<a href="smartscale-api.html#smartscale-api" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Developed by Jameson Brennan, Ira Parsons, and Hector Menendez</em>
 <em>Department of Animal Science, South Dakota State University</em></p>
-<p>The objectives of this hands on tutorial are to introduce workshop participants to methods for streamlining SmartScale data processing tasks in R.
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>. When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. The example below will print a statement and run a quick computation.</p>
+<p>The objectives of this hands on tutorial are to introduce workshop participants to methods for streamlining SmartScale data processing tasks in R.</p>
 <div id="api-1" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> API<a href="smartscale-api.html#api-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="libraries" class="section level3 hasAnchor" number="2.1.1">
@@ -532,17 +531,23 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 <p>Using the table function we will get the number of daily weights for each individual animal. We can see that several tags only have a few observations while others have hundreds. These are could be test tags that were used to test the scales or had animals that infrequently used the equipement. The code below will delete individual tags with less than 6 observations.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="smartscale-api.html#cb27-1" tabindex="-1"></a><span class="fu">table</span>(d.smart<span class="sc">$</span>RFIDTag)</span></code></pre></div>
 <pre><code>## 
-## 030197 030226 030296 030312 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 679590 679591 679593 679594 679596 679605 679608 679612 679617 679619 679622 
-##      6      1      2      1    242    252    368    355    325    282    241    243    337     70     57    402    231    229    341    317    132    337    143    337    337    212 
-## 679629 679633 679635 679663 679795 679814 679817 679822 680396 680410 680411 680412 680413 680414 828028 828031 828038 
-##    175    240    293      2      4      2      6      2    245    260    336    259    270    306    218    296    339</code></pre>
+## 030197 030226 030296 030312 605891 605892 605893 605896 605899 679558 679559 679560 
+##      6      1      2      1    242    252    368    355    325    282    241    243 
+## 679563 679572 679573 679590 679591 679593 679594 679596 679605 679608 679612 679617 
+##    337     70     57    402    231    229    341    317    132    337    143    337 
+## 679619 679622 679629 679633 679635 679663 679795 679814 679817 679822 680396 680410 
+##    337    212    175    240    293      2      4      2      6      2    245    260 
+## 680411 680412 680413 680414 828028 828031 828038 
+##    336    259    270    306    218    296    339</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="smartscale-api.html#cb29-1" tabindex="-1"></a>d.smart<span class="ot">=</span>d.smart <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(RFIDTag) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">n</span>()<span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>()</span>
 <span id="cb29-2"><a href="smartscale-api.html#cb29-2" tabindex="-1"></a><span class="fu">table</span>(d.smart<span class="sc">$</span>RFIDTag)</span></code></pre></div>
 <pre><code>## 
-## 030197 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 679590 679591 679593 679594 679596 679605 679608 679612 679617 679619 679622 679629 679633 679635 
-##      6    242    252    368    355    325    282    241    243    337     70     57    402    231    229    341    317    132    337    143    337    337    212    175    240    293 
-## 679817 680396 680410 680411 680412 680413 680414 828028 828031 828038 
-##      6    245    260    336    259    270    306    218    296    339</code></pre>
+## 030197 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 
+##      6    242    252    368    355    325    282    241    243    337     70     57 
+## 679590 679591 679593 679594 679596 679605 679608 679612 679617 679619 679622 679629 
+##    402    231    229    341    317    132    337    143    337    337    212    175 
+## 679633 679635 679817 680396 680410 680411 680412 680413 680414 828028 828031 828038 
+##    240    293      6    245    260    336    259    270    306    218    296    339</code></pre>
 </div>
 </div>
 <div id="animal-performance" class="section level2 hasAnchor" number="2.4">

@@ -219,7 +219,6 @@ div.csl-indent {
 <p><em>Developed by Jameson Brennan, Ira Parsons, and Hector Menendez</em>
 <em>Department of Animal Science, South Dakota State University</em></p>
 <p>The objectives of this markdown document is to automate the download and visualization of Greenfeed data provided by C-Lock. Users will need to provide their own login credentials to run the code. This markdown can be used to quickly visualize usage of Greenfeed machines and preliminary data.</p>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>. When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. The example below will print a statement and run a quick computation.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="greenfeed-api.html#cb1-1" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-2"><a href="greenfeed-api.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <div id="api" class="section level2 hasAnchor" number="1.1">
@@ -302,7 +301,8 @@ div.csl-indent {
 <span id="cb5-2"><a href="greenfeed-api.html#cb5-2" tabindex="-1"></a>rfid_day<span class="ot">=</span>df <span class="sc">%&gt;%</span>                              <span class="co"># Applying group_by &amp; summarise</span></span>
 <span id="cb5-3"><a href="greenfeed-api.html#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Date,FeederID) <span class="sc">%&gt;%</span></span>
 <span id="cb5-4"><a href="greenfeed-api.html#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n_distinct</span>(RFID))</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="greenfeed-api.html#cb7-1" tabindex="-1"></a>rfid_day<span class="ot">=</span><span class="fu">na.omit</span>(rfid_day)</span>
 <span id="cb7-2"><a href="greenfeed-api.html#cb7-2" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="greenfeed-api.html#cb7-3" tabindex="-1"></a><span class="fu">ggplot</span>(rfid_day,<span class="fu">aes</span>(<span class="at">x=</span>Date,<span class="at">y=</span>count))<span class="sc">+</span></span>
@@ -326,8 +326,10 @@ div.csl-indent {
 <span id="cb8-11"><a href="greenfeed-api.html#cb8-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>))<span class="sc">+</span></span>
 <span id="cb8-12"><a href="greenfeed-api.html#cb8-12" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite outside the scale range (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite outside the scale range
+## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="greenfeed-api.html#cb12-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="greenfeed-api.html#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;</span> (<span class="fu">max</span>(df<span class="sc">$</span>Date) <span class="sc">-</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
@@ -342,7 +344,8 @@ div.csl-indent {
 <span id="cb12-11"><a href="greenfeed-api.html#cb12-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
 <span id="cb12-12"><a href="greenfeed-api.html#cb12-12" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
 <span id="cb12-13"><a href="greenfeed-api.html#cb12-13" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 
 </div>

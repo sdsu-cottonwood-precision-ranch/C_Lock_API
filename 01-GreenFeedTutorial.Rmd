@@ -4,11 +4,6 @@
 
 The objectives of this markdown document is to automate the download and visualization of Greenfeed data provided by C-Lock. Users will need to provide their own login credentials to run the code. This markdown can be used to quickly visualize usage of Greenfeed machines and preliminary data.  
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. The example below will print a statement and run a quick computation. 
-
-
-
-
 ```{r setup, warning=FALSE ,message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
@@ -37,7 +32,7 @@ ET   <-  "yyyy-mm-dd"
 ```
 
 ```{r echo=FALSE}
-source(file = '../Documents/Projects/2023_API-Paper/Rcode/GreenfeedAuth.R')
+source(file = '../Projects/2023_API-Paper/Rcode/GreenfeedAuth.R')
 ```
 
 ### Data Download

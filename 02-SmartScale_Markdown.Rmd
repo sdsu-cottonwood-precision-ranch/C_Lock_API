@@ -3,7 +3,6 @@
 *Department of Animal Science, South Dakota State University*
 
 The objectives of this hands on tutorial are to introduce workshop participants to methods for streamlining SmartScale data processing tasks in R.
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. The example below will print a statement and run a quick computation. 
 
 ## API
 ### Libraries
