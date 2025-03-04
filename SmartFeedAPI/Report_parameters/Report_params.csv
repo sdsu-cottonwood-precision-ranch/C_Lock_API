@@ -1,0 +1,12 @@
+Parameter,Value,Comment
+Assignments,2022Lili,Define assignments as listed in the equipment sheet
+Start,3/27/2022,Define start day
+Current_day,0,"1 for yes, 0 for no"
+End,5/14/2022,"If no, define end date"
+USERNAME,sdsuwr,C-Lock username
+PASSWORD,Pasm605,Password
+login_url,https://greenfeed.c-lockinc.com/GreenFeed/checklogon.php,
+FULL_WT,1,"1 for yes, 0 for no"
+GET_VISITS,1,"1 for yes, 0 for daily averages"
+EquipmentDB,/Users/ira/Documents/SDSU/Equipment,Database for equpment database
+CattleDB,Data/Cattle/Animals.csv,Cattle records
