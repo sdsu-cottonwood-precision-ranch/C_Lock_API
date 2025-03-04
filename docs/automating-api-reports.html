@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>C-Lock Application Program Interfaces | _main.knit</title>
+  <title>4 Automating API Reports | _main.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="C-Lock Application Program Interfaces | _main.knit" />
+  <meta property="og:title" content="4 Automating API Reports | _main.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="C-Lock Application Program Interfaces | _main.knit" />
+  <meta name="twitter:title" content="4 Automating API Reports | _main.knit" />
   
   
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="greenfeed-api.html"/>
+<link rel="prev" href="smartfeeder-api.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -215,32 +215,47 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<!--bookdown:title:end-->
-<!--bookdown:title:start-->
-<div id="c-lock-application-program-interfaces" class="section level1 unnumbered hasAnchor">
-<h1>C-Lock Application Program Interfaces<a href="index.html#c-lock-application-program-interfaces" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><img src="IMG_0405.jpeg" />
-Authored by Drs. <em>Jameson Brennan<sup>1</sup>, Ira Parsons<sup>1</sup>, Hector Menendez<sup>1</sup>, Meredith Harrison<sup>2</sup></em><br />
-<em><sup>1</sup>South Dakota State University, Dept. of Animal Science, Rapid City SD</em><br />
-<em><sup>2</sup>C-Lock Inc. Rapid City SD</em></p>
-<div id="abstract" class="section level2 hasAnchor" number="0.1">
-<h2><span class="header-section-number">0.1</span> Abstract<a href="index.html#abstract" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Advances in sensor technology have ushered in the ability to collect vast amounts of data in real-time for animal production systems. Though
-there is much promise in improving animal production and research utilizing precision systems, for this technology to be truly impactful, data
-generated needs to be accessed and processed in near real time for relevant decision-making. In this paper, three application programming
-interfaces were developed to facilitate near real-time data access. In addition, open-source tutorials were developed to generate summary
-statistics of three precision livestock technologies and systems checks to ensure equipment is working properly and animal adoption rates of
-technology are adequate for data collection. The development of data processing outlined in this paper will be essential for the successful implementation of precision technology and integration of data in real time with animal nutrition or decision-making algorithms <span class="citation">(Brennan et al. 2024)</span>.</p>
+<div id="automating-api-reports" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Automating API Reports<a href="automating-api-reports.html#automating-api-reports" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>As demonstrated above, API’s allow routine and replicate access to online databases, making them extremely useful for integrating sensor systems via the internet of things infrastructure. Automated reports are a means of realizing and testing the true value of real-time data. Creating automated reports that land in your inbox serve as a way for scientists to realize the value of real-time data, and spark the creative juices to begin data analysis as the data comes in. And, on a more mundane but perhaps more importantly, it serves to improve project and equipment management by providing detailed reports for graduate students, advisors, and research managers to use to monitor precision livestock equipment, and fix issues in real-time as they arise.</p>
+<p>Creating the report</p>
+<p>Create the report by following many of the same steps you would normally use to learn about your data at the beginning of any data analysis project. These steps are already given in the previous examples. After cleaning your data, organize the plots and information into a coherent report using Rmarkdown. This document allows combining data and writing, making it a simple solution to automate various data wrangling, processing, and reporting tasks.</p>
+<p>Sending the report to yourself</p>
+<p>Now that you have the report created, wouldn’t it be great to get it in your inbox, on your phone, or wherever was most convenient, daily? This would save you the time to start up your computer program and rerun daily reports. I automated my reports utilizing the Blastula package and a dumby gmail account.
+1) First, create an r script to knit the markdown document.
++ I included a couple of libraries statements,
++ Set up the system environment pointing to where my pandoc tools are installed (google this)
++ Specify the working directory where my code, files storing the data, and markdown files live
++ Finally, include the blastula code that renders an email from the rmarkdown document, and sends it using my gmail credentials. These email keys are protected text files downloaded from your dumby gmail account, and basically are what blastula uses to login and send your email message automatically</p>
+<p><img src="Picture1.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Next, we need to program the computer to tell it to automatically push “RUN” on your R script. To do this we will use a .bat (microsofts term for a batch) file. For those computer nerds among us, this is quite simple. Those who are just into R programing, this is a bit intimidating. But never fear, it is acually quite simple.</li>
+</ol>
+<ul>
+<li>Create a simple text file using notepad on any windows computer</li>
+<li>TITLE names the code, but this isn’t important</li>
+<li>:: comments out sections, similar to the # in R programing languange</li>
+<li>define the path to your R program using the “set” command. Typically R will live in your computers program files on the C drive. This creates a command, named <em>rscript</em> that tells the computer to open R.</li>
+<li>Next, define the path to the .R code we created in step 1, again using the “set” command. This creates a second command to open the r code, named <em>rungf</em> to run the gf feed code in the R environment created in the <em>rscript</em> command.</li>
+<li>Execute the R script. This is done using the %rscript% “rungf% commands, run in tandem on the same line.</li>
+<li>Finally, we can create a message that is printed if the script completes execution. We can also and a PAUSE command to the end of the script to keep the command line open after executing. This saves any errors that might have occured, and aids in problem solving.</li>
+</ul>
+<p><img src="Picture2.png" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Next, use microsoft scheduler to schedule the running of your .bat file that you just created.
+<img src="Picture3.png" />
+And now, Voila!! Providing you don’t hit any errors, you should have an emailed report landing in your email inbox with important datails you decided were important for monitoring your equipment, and the ongoing state of the animals and research project in your care.
+<img src="Picture4.png" /></li>
+</ol>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="greenfeed-api.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="smartfeeder-api.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

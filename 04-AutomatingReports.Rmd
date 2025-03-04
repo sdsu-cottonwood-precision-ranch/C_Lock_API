@@ -1,11 +1,13 @@
 # Automating API Reports
 As demonstrated above, API's allow routine and replicate access to online databases, making them extremely useful for integrating sensor systems via the internet of things infrastructure. Automated reports are a means of realizing and testing the true value of real-time data. Creating automated reports that land in your inbox serve as a way for scientists to realize the value of real-time data, and spark the creative juices to begin data analysis as the data comes in. And, on a more mundane but perhaps more importantly, it serves to improve project and equipment management by providing detailed reports for graduate students, advisors, and research managers to use to monitor precision livestock equipment, and fix issues in real-time as they arise. 
 
-# Creating the report. 
+Creating the report
+
 Create the report by following many of the same steps you would normally use to learn about your data at the beginning of any data analysis project. These steps are already given in the previous examples. After cleaning your data, organize the plots and information into a coherent report using Rmarkdown. This document allows combining data and writing, making it a simple solution to automate various data wrangling, processing, and reporting tasks. 
 
-# Sending the report to yourself
-Now that you have the report created, wouldn't it be great to get it in your inbox, on your phone, or whereever was most convenient, daily? This would save you the time to start up your computer program and rerun daily reports. I automated my reports utilizing the Blastula package and a dumby gmail account.
+Sending the report to yourself
+
+Now that you have the report created, wouldn't it be great to get it in your inbox, on your phone, or wherever was most convenient, daily? This would save you the time to start up your computer program and rerun daily reports. I automated my reports utilizing the Blastula package and a dumby gmail account.
 1) First, create an r script to knit the markdown document. 
   + I included a couple of libraries statements,
   + Set up the system environment pointing to where my pandoc tools are installed (google this)

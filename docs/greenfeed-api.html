@@ -64,7 +64,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -196,7 +196,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeeder-data-processing"><i class="fa fa-check"></i><b>3.2</b> SmartFeeder Data Processing</a></li>
 <li class="chapter" data-level="3.3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeedert-data-visualization"><i class="fa fa-check"></i><b>3.3</b> SmartFeedert Data Visualization</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>4</b> References</a></li>
+<li class="chapter" data-level="4" data-path="automating-api-reports.html"><a href="automating-api-reports.html"><i class="fa fa-check"></i><b>4</b> Automating API Reports</a></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 </ul>
 
       </nav>
@@ -301,8 +302,7 @@ div.csl-indent {
 <span id="cb5-2"><a href="greenfeed-api.html#cb5-2" tabindex="-1"></a>rfid_day<span class="ot">=</span>df <span class="sc">%&gt;%</span>                              <span class="co"># Applying group_by &amp; summarise</span></span>
 <span id="cb5-3"><a href="greenfeed-api.html#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Date,FeederID) <span class="sc">%&gt;%</span></span>
 <span id="cb5-4"><a href="greenfeed-api.html#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n_distinct</span>(RFID))</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="greenfeed-api.html#cb7-1" tabindex="-1"></a>rfid_day<span class="ot">=</span><span class="fu">na.omit</span>(rfid_day)</span>
 <span id="cb7-2"><a href="greenfeed-api.html#cb7-2" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="greenfeed-api.html#cb7-3" tabindex="-1"></a><span class="fu">ggplot</span>(rfid_day,<span class="fu">aes</span>(<span class="at">x=</span>Date,<span class="at">y=</span>count))<span class="sc">+</span></span>
@@ -326,10 +326,8 @@ div.csl-indent {
 <span id="cb8-11"><a href="greenfeed-api.html#cb8-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>))<span class="sc">+</span></span>
 <span id="cb8-12"><a href="greenfeed-api.html#cb8-12" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite outside the scale range
-## (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: Removed 5 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite outside the scale range (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="greenfeed-api.html#cb12-1" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="greenfeed-api.html#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;</span> (<span class="fu">max</span>(df<span class="sc">$</span>Date) <span class="sc">-</span> <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
@@ -344,8 +342,7 @@ div.csl-indent {
 <span id="cb12-11"><a href="greenfeed-api.html#cb12-11" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
 <span id="cb12-12"><a href="greenfeed-api.html#cb12-12" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
 <span id="cb12-13"><a href="greenfeed-api.html#cb12-13" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Date&#39;. You can override using the `.groups` argument.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 
 </div>

@@ -64,7 +64,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -196,7 +196,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeeder-data-processing"><i class="fa fa-check"></i><b>3.2</b> SmartFeeder Data Processing</a></li>
 <li class="chapter" data-level="3.3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeedert-data-visualization"><i class="fa fa-check"></i><b>3.3</b> SmartFeedert Data Visualization</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>4</b> References</a></li>
+<li class="chapter" data-level="4" data-path="automating-api-reports.html"><a href="automating-api-reports.html"><i class="fa fa-check"></i><b>4</b> Automating API Reports</a></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 </ul>
 
       </nav>
@@ -380,7 +381,7 @@ div.csl-indent {
 <td align="right">33</td>
 <td align="left">SHSF K30</td>
 <td align="left">000000000840003241679559</td>
-<td align="right">559</td>
+<td align="right">1233</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -391,7 +392,7 @@ div.csl-indent {
 <td align="right">16</td>
 <td align="left">SHSF K41</td>
 <td align="left">000000000840003241679563</td>
-<td align="right">490</td>
+<td align="right">1080</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -402,7 +403,7 @@ div.csl-indent {
 <td align="right">18</td>
 <td align="left">SHSF K41</td>
 <td align="left">000000000840003241679563</td>
-<td align="right">486</td>
+<td align="right">1072</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -413,7 +414,7 @@ div.csl-indent {
 <td align="right">13</td>
 <td align="left">SHSF K41</td>
 <td align="left">000000000840003241679563</td>
-<td align="right">319</td>
+<td align="right">703</td>
 <td align="left">No</td>
 </tr>
 <tr class="odd">
@@ -424,7 +425,7 @@ div.csl-indent {
 <td align="right">16</td>
 <td align="left">SHSF K41</td>
 <td align="left">000000000840003241679563</td>
-<td align="right">495</td>
+<td align="right">1092</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -435,7 +436,7 @@ div.csl-indent {
 <td align="right">12</td>
 <td align="left">Beach K224</td>
 <td align="left">000000000840003241679593</td>
-<td align="right">350</td>
+<td align="right">772</td>
 <td align="left">No</td>
 </tr>
 </tbody>
@@ -531,23 +532,19 @@ div.csl-indent {
 <p>Using the table function we will get the number of daily weights for each individual animal. We can see that several tags only have a few observations while others have hundreds. These are could be test tags that were used to test the scales or had animals that infrequently used the equipement. The code below will delete individual tags with less than 6 observations.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="smartscale-api.html#cb27-1" tabindex="-1"></a><span class="fu">table</span>(d.smart<span class="sc">$</span>RFIDTag)</span></code></pre></div>
 <pre><code>## 
-## 030197 030226 030296 030312 605891 605892 605893 605896 605899 679558 679559 679560 
-##      6      1      2      1    242    252    368    355    325    282    241    243 
-## 679563 679572 679573 679590 679591 679593 679594 679596 679605 679608 679612 679617 
-##    337     70     57    402    231    229    341    317    132    337    143    337 
-## 679619 679622 679629 679633 679635 679663 679795 679814 679817 679822 680396 680410 
-##    337    212    175    240    293      2      4      2      6      2    245    260 
+## 030197 030226 030296 030312 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 679590 679591 679593 
+##      6      1      2      1    242    255    365    354    326    281    242    243    337     70     57    400    231    229 
+## 679594 679596 679605 679608 679612 679617 679619 679622 679629 679633 679635 679663 679795 679814 679817 679822 680396 680410 
+##    340    318    132    333    144    337    338    212    175    241    293      2      4      2      6      2    243    260 
 ## 680411 680412 680413 680414 828028 828031 828038 
-##    336    259    270    306    218    296    339</code></pre>
+##    334    257    269    305    216    296    340</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="smartscale-api.html#cb29-1" tabindex="-1"></a>d.smart<span class="ot">=</span>d.smart <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(RFIDTag) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">n</span>()<span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>()</span>
 <span id="cb29-2"><a href="smartscale-api.html#cb29-2" tabindex="-1"></a><span class="fu">table</span>(d.smart<span class="sc">$</span>RFIDTag)</span></code></pre></div>
 <pre><code>## 
-## 030197 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 
-##      6    242    252    368    355    325    282    241    243    337     70     57 
-## 679590 679591 679593 679594 679596 679605 679608 679612 679617 679619 679622 679629 
-##    402    231    229    341    317    132    337    143    337    337    212    175 
-## 679633 679635 679817 680396 680410 680411 680412 680413 680414 828028 828031 828038 
-##    240    293      6    245    260    336    259    270    306    218    296    339</code></pre>
+## 030197 605891 605892 605893 605896 605899 679558 679559 679560 679563 679572 679573 679590 679591 679593 679594 679596 679605 
+##      6    242    255    365    354    326    281    242    243    337     70     57    400    231    229    340    318    132 
+## 679608 679612 679617 679619 679622 679629 679633 679635 679817 680396 680410 680411 680412 680413 680414 828028 828031 828038 
+##    333    144    337    338    212    175    241    293      6    243    260    334    257    269    305    216    296    340</code></pre>
 </div>
 </div>
 <div id="animal-performance" class="section level2 hasAnchor" number="2.4">
@@ -560,19 +557,19 @@ div.csl-indent {
 ## lm(formula = Weight ~ tday, data = d.smart)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -152.417  -23.256   -3.834   28.501  171.551 
+##     Min      1Q  Median      3Q     Max 
+## -336.93  -51.31   -8.48   62.83  377.41 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 536.47638    0.85231   629.4   &lt;2e-16 ***
-## tday          1.96788    0.01905   103.3   &lt;2e-16 ***
+## (Intercept) 1.183e+03  1.883e+00   628.0   &lt;2e-16 ***
+## tday        4.342e+00  4.207e-02   103.2   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 39.93 on 9037 degrees of freedom
-## Multiple R-squared:  0.5414, Adjusted R-squared:  0.5413 
-## F-statistic: 1.067e+04 on 1 and 9037 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 88.14 on 9025 degrees of freedom
+## Multiple R-squared:  0.5414, Adjusted R-squared:  0.5414 
+## F-statistic: 1.065e+04 on 1 and 9025 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We can see that the intercept of the model is 536, which would equate to our average starting weight for the herd and the slope is 1.96 which would equate to our average daily gain (ADG). Plotting it we can see the relationship.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="smartscale-api.html#cb33-1" tabindex="-1"></a><span class="fu">ggplot</span>(d.smart,<span class="fu">aes</span>(<span class="at">y=</span>Weight,<span class="at">x=</span>tday))<span class="sc">+</span></span>
 <span id="cb33-2"><a href="smartscale-api.html#cb33-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>

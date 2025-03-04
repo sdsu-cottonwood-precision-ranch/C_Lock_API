@@ -20,4 +20,5 @@ report-paramters
 data-download-2
 smartfeeder-data-processing
 smartfeedert-data-visualization
+automating-api-reports
 references

@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="smartscale-api.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="automating-api-reports.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -64,7 +64,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -196,7 +196,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeeder-data-processing"><i class="fa fa-check"></i><b>3.2</b> SmartFeeder Data Processing</a></li>
 <li class="chapter" data-level="3.3" data-path="smartfeeder-api.html"><a href="smartfeeder-api.html#smartfeedert-data-visualization"><i class="fa fa-check"></i><b>3.3</b> SmartFeedert Data Visualization</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>4</b> References</a></li>
+<li class="chapter" data-level="4" data-path="automating-api-reports.html"><a href="automating-api-reports.html"><i class="fa fa-check"></i><b>4</b> Automating API Reports</a></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 </ul>
 
       </nav>
@@ -470,115 +471,98 @@ Next, we can quickly plot some of these behaviors.</p>
 <span id="cb44-14"><a href="smartfeeder-api.html#cb44-14" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">size =</span> <span class="fl">0.05</span>),</span>
 <span id="cb44-15"><a href="smartfeeder-api.html#cb44-15" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
 <span id="cb44-16"><a href="smartfeeder-api.html#cb44-16" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb44-17"><a href="smartfeeder-api.html#cb44-17" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-## ℹ Please use the `linewidth` argument instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="smartfeeder-api.html#cb46-1" tabindex="-1"></a>p.bvfreq</span></code></pre></div>
+<span id="cb44-17"><a href="smartfeeder-api.html#cb44-17" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb44-18"><a href="smartfeeder-api.html#cb44-18" tabindex="-1"></a>p.bvfreq</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>This next chunk of code will remove the observations that are not valid and replot the data.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="smartfeeder-api.html#cb48-1" tabindex="-1"></a><span class="co">#Remove not valid points</span></span>
-<span id="cb48-2"><a href="smartfeeder-api.html#cb48-2" tabindex="-1"></a>d.sfeed<span class="ot">=</span><span class="fu">subset</span>(d.sfeed, WarningMsg <span class="sc">==</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb48-3"><a href="smartfeeder-api.html#cb48-3" tabindex="-1"></a><span class="co"># FeedingBehavior -----</span></span>
-<span id="cb48-4"><a href="smartfeeder-api.html#cb48-4" tabindex="-1"></a>d.fbdaily <span class="ot">=</span> d.sfeed[, .(<span class="at">BVfreq =</span> .N,</span>
-<span id="cb48-5"><a href="smartfeeder-api.html#cb48-5" tabindex="-1"></a>                         <span class="at">BVdur.tot =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
-<span id="cb48-6"><a href="smartfeeder-api.html#cb48-6" tabindex="-1"></a>                         <span class="at">BVdur.u =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
-<span id="cb48-7"><a href="smartfeeder-api.html#cb48-7" tabindex="-1"></a>                         <span class="at">BVdur.sd =</span> <span class="fu">sd</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
-<span id="cb48-8"><a href="smartfeeder-api.html#cb48-8" tabindex="-1"></a>                         <span class="at">IntakeKG.tot =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(IntakeKG), <span class="at">na.rm =</span> T),</span>
-<span id="cb48-9"><a href="smartfeeder-api.html#cb48-9" tabindex="-1"></a>                         <span class="at">ERkg.min =</span> (<span class="fu">sum</span>(<span class="fu">as.numeric</span>(IntakeKG), <span class="at">na.rm =</span> T)<span class="sc">/</span>(<span class="fu">sum</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T)<span class="sc">/</span><span class="dv">60</span>))),</span>
-<span id="cb48-10"><a href="smartfeeder-api.html#cb48-10" tabindex="-1"></a>                 by <span class="ot">=</span> <span class="fu">list</span>(RFID,Date)]</span>
-<span id="cb48-11"><a href="smartfeeder-api.html#cb48-11" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="smartfeeder-api.html#cb48-12" tabindex="-1"></a><span class="co"># Calculate cumulative intake </span></span>
-<span id="cb48-13"><a href="smartfeeder-api.html#cb48-13" tabindex="-1"></a><span class="fu">setorder</span>(d.fbdaily, <span class="at">cols =</span> <span class="st">&#39;RFID&#39;</span>,<span class="st">&#39;Date&#39;</span>)</span>
-<span id="cb48-14"><a href="smartfeeder-api.html#cb48-14" tabindex="-1"></a>d.fbdaily[, cumDMI <span class="sc">:=</span> <span class="fu">cumsum</span>(IntakeKG.tot), by <span class="ot">=</span> <span class="st">&#39;RFID&#39;</span>]</span>
-<span id="cb48-15"><a href="smartfeeder-api.html#cb48-15" tabindex="-1"></a></span>
-<span id="cb48-16"><a href="smartfeeder-api.html#cb48-16" tabindex="-1"></a><span class="co">#plot animal weight by date</span></span>
-<span id="cb48-17"><a href="smartfeeder-api.html#cb48-17" tabindex="-1"></a>p.intakedaily <span class="ot">=</span> d.fbdaily <span class="sc">%&gt;%</span> </span>
-<span id="cb48-18"><a href="smartfeeder-api.html#cb48-18" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(RFID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;000000000840003241680417&#39;</span>,</span>
-<span id="cb48-19"><a href="smartfeeder-api.html#cb48-19" tabindex="-1"></a>                            <span class="st">&#39;000000000840003241679459&#39;</span>,</span>
-<span id="cb48-20"><a href="smartfeeder-api.html#cb48-20" tabindex="-1"></a>                            <span class="st">&#39;000000000840003241679471&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-21"><a href="smartfeeder-api.html#cb48-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.Date</span>(Date), <span class="at">y =</span> IntakeKG.tot, <span class="at">color =</span> RFID))<span class="sc">+</span></span>
-<span id="cb48-22"><a href="smartfeeder-api.html#cb48-22" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb48-23"><a href="smartfeeder-api.html#cb48-23" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)<span class="sc">+</span></span>
-<span id="cb48-24"><a href="smartfeeder-api.html#cb48-24" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Date&#39;</span>,</span>
-<span id="cb48-25"><a href="smartfeeder-api.html#cb48-25" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Daily intake, kg per day&#39;</span>,</span>
-<span id="cb48-26"><a href="smartfeeder-api.html#cb48-26" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&#39;Intake&#39;</span>)<span class="sc">+</span></span>
-<span id="cb48-27"><a href="smartfeeder-api.html#cb48-27" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb48-28"><a href="smartfeeder-api.html#cb48-28" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">size =</span> <span class="fl">0.1</span>),</span>
-<span id="cb48-29"><a href="smartfeeder-api.html#cb48-29" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">size =</span> <span class="fl">0.05</span>),</span>
-<span id="cb48-30"><a href="smartfeeder-api.html#cb48-30" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb48-31"><a href="smartfeeder-api.html#cb48-31" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb48-32"><a href="smartfeeder-api.html#cb48-32" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb48-33"><a href="smartfeeder-api.html#cb48-33" tabindex="-1"></a>p.intakedaily</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="smartfeeder-api.html#cb46-1" tabindex="-1"></a><span class="co">#Remove not valid points</span></span>
+<span id="cb46-2"><a href="smartfeeder-api.html#cb46-2" tabindex="-1"></a>d.sfeed<span class="ot">=</span><span class="fu">subset</span>(d.sfeed, WarningMsg <span class="sc">==</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb46-3"><a href="smartfeeder-api.html#cb46-3" tabindex="-1"></a><span class="co"># FeedingBehavior -----</span></span>
+<span id="cb46-4"><a href="smartfeeder-api.html#cb46-4" tabindex="-1"></a>d.fbdaily <span class="ot">=</span> d.sfeed[, .(<span class="at">BVfreq =</span> .N,</span>
+<span id="cb46-5"><a href="smartfeeder-api.html#cb46-5" tabindex="-1"></a>                         <span class="at">BVdur.tot =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
+<span id="cb46-6"><a href="smartfeeder-api.html#cb46-6" tabindex="-1"></a>                         <span class="at">BVdur.u =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
+<span id="cb46-7"><a href="smartfeeder-api.html#cb46-7" tabindex="-1"></a>                         <span class="at">BVdur.sd =</span> <span class="fu">sd</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T),</span>
+<span id="cb46-8"><a href="smartfeeder-api.html#cb46-8" tabindex="-1"></a>                         <span class="at">IntakeKG.tot =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(IntakeKG), <span class="at">na.rm =</span> T),</span>
+<span id="cb46-9"><a href="smartfeeder-api.html#cb46-9" tabindex="-1"></a>                         <span class="at">ERkg.min =</span> (<span class="fu">sum</span>(<span class="fu">as.numeric</span>(IntakeKG), <span class="at">na.rm =</span> T)<span class="sc">/</span>(<span class="fu">sum</span>(<span class="fu">as.numeric</span>(Duration), <span class="at">na.rm =</span> T)<span class="sc">/</span><span class="dv">60</span>))),</span>
+<span id="cb46-10"><a href="smartfeeder-api.html#cb46-10" tabindex="-1"></a>                 by <span class="ot">=</span> <span class="fu">list</span>(RFID,Date)]</span>
+<span id="cb46-11"><a href="smartfeeder-api.html#cb46-11" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="smartfeeder-api.html#cb46-12" tabindex="-1"></a><span class="co"># Calculate cumulative intake </span></span>
+<span id="cb46-13"><a href="smartfeeder-api.html#cb46-13" tabindex="-1"></a><span class="fu">setorder</span>(d.fbdaily, <span class="at">cols =</span> <span class="st">&#39;RFID&#39;</span>,<span class="st">&#39;Date&#39;</span>)</span>
+<span id="cb46-14"><a href="smartfeeder-api.html#cb46-14" tabindex="-1"></a>d.fbdaily[, cumDMI <span class="sc">:=</span> <span class="fu">cumsum</span>(IntakeKG.tot), by <span class="ot">=</span> <span class="st">&#39;RFID&#39;</span>]</span>
+<span id="cb46-15"><a href="smartfeeder-api.html#cb46-15" tabindex="-1"></a></span>
+<span id="cb46-16"><a href="smartfeeder-api.html#cb46-16" tabindex="-1"></a><span class="co">#plot animal weight by date</span></span>
+<span id="cb46-17"><a href="smartfeeder-api.html#cb46-17" tabindex="-1"></a>p.intakedaily <span class="ot">=</span> d.fbdaily <span class="sc">%&gt;%</span> </span>
+<span id="cb46-18"><a href="smartfeeder-api.html#cb46-18" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(RFID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;000000000840003241680417&#39;</span>,</span>
+<span id="cb46-19"><a href="smartfeeder-api.html#cb46-19" tabindex="-1"></a>                            <span class="st">&#39;000000000840003241679459&#39;</span>,</span>
+<span id="cb46-20"><a href="smartfeeder-api.html#cb46-20" tabindex="-1"></a>                            <span class="st">&#39;000000000840003241679471&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-21"><a href="smartfeeder-api.html#cb46-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.Date</span>(Date), <span class="at">y =</span> IntakeKG.tot, <span class="at">color =</span> RFID))<span class="sc">+</span></span>
+<span id="cb46-22"><a href="smartfeeder-api.html#cb46-22" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb46-23"><a href="smartfeeder-api.html#cb46-23" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)<span class="sc">+</span></span>
+<span id="cb46-24"><a href="smartfeeder-api.html#cb46-24" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Date&#39;</span>,</span>
+<span id="cb46-25"><a href="smartfeeder-api.html#cb46-25" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Daily intake, kg per day&#39;</span>,</span>
+<span id="cb46-26"><a href="smartfeeder-api.html#cb46-26" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&#39;Intake&#39;</span>)<span class="sc">+</span></span>
+<span id="cb46-27"><a href="smartfeeder-api.html#cb46-27" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb46-28"><a href="smartfeeder-api.html#cb46-28" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">size =</span> <span class="fl">0.1</span>),</span>
+<span id="cb46-29"><a href="smartfeeder-api.html#cb46-29" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">size =</span> <span class="fl">0.05</span>),</span>
+<span id="cb46-30"><a href="smartfeeder-api.html#cb46-30" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb46-31"><a href="smartfeeder-api.html#cb46-31" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb46-32"><a href="smartfeeder-api.html#cb46-32" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb46-33"><a href="smartfeeder-api.html#cb46-33" tabindex="-1"></a>p.intakedaily</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="smartfeeder-api.html#cb50-1" tabindex="-1"></a><span class="co"># Cumulate daily intake -----</span></span>
-<span id="cb50-2"><a href="smartfeeder-api.html#cb50-2" tabindex="-1"></a>d.sfeed</span></code></pre></div>
-<pre><code>##         FeederID                     RFID           StartTime             EndTime
-##           &lt;char&gt;                   &lt;char&gt;              &lt;char&gt;              &lt;char&gt;
-##      1:    10818 000000000840003252605896 2023-03-14 18:00:29 2023-03-14 18:02:42
-##      2:    10818 000000000840003252605892 2023-03-14 18:08:33 2023-03-14 18:21:39
-##      3:    10818 000000000840003252605896 2023-03-14 18:21:39 2023-03-14 18:28:08
-##      4:    10818 000000000840003241679559 2023-03-14 18:58:44 2023-03-14 19:05:44
-##      5:    10818 000000000840003241679617 2023-03-14 19:05:44 2023-03-14 19:09:48
-##     ---                                                                          
-## 132895:    10822 000000000840003241679458 2023-07-17 20:22:54 2023-07-17 20:26:41
-## 132896:    10822 000000000840003241679454 2023-07-17 20:26:41 2023-07-17 20:29:55
-## 132897:    10822 000000000840003241679450 2023-07-17 20:30:24 2023-07-17 20:34:13
-## 132898:    10822 000000000840003241679452 2023-07-17 20:35:02 2023-07-17 20:44:16
-## 132899:                                                                          
-##         Duration StartMassKG EndMassKG IntakeKG FeedTypeNum WarningCode WarningMsg
-##           &lt;char&gt;      &lt;char&gt;    &lt;char&gt;   &lt;char&gt;      &lt;char&gt;      &lt;char&gt;     &lt;char&gt;
-##      1:      133     121.708   121.222    0.486           1           0           
-##      2:      786     121.247    118.65    2.597           1           0           
-##      3:      389      118.65   118.199     0.45           1           0           
-##      4:      420     114.214   113.067    1.146           1           0           
-##      5:      244     113.067   111.937    1.131           1           0           
-##     ---                                                                           
-## 132895:      227      30.739     30.31    0.429           1           0           
-## 132896:      194       30.31      29.8     0.51           1           0           
-## 132897:      229        29.8    29.177    0.623           1           0           
-## 132898:      554      29.223    29.101    0.123           1           0           
-## 132899:                                                                           
-##               Date RFIDTag
-##             &lt;Date&gt;  &lt;char&gt;
-##      1: 2023-03-14  605896
-##      2: 2023-03-14  605892
-##      3: 2023-03-14  605896
-##      4: 2023-03-14  679559
-##      5: 2023-03-14  679617
-##     ---                   
-## 132895: 2023-07-17  679458
-## 132896: 2023-07-17  679454
-## 132897: 2023-07-17  679450
-## 132898: 2023-07-17  679452
-## 132899:       &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="smartfeeder-api.html#cb52-1" tabindex="-1"></a>d.PrevDayFE <span class="ot">=</span> d.sfeed[Date <span class="sc">==</span> <span class="fu">as.character</span>(<span class="st">&#39;2023-07-01&#39;</span>) <span class="sc">&amp;</span> RFID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;000000000840003241680417&#39;</span>,</span>
-<span id="cb52-2"><a href="smartfeeder-api.html#cb52-2" tabindex="-1"></a>                                                                    <span class="st">&#39;000000000840003241679459&#39;</span>,</span>
-<span id="cb52-3"><a href="smartfeeder-api.html#cb52-3" tabindex="-1"></a>                                                                    <span class="st">&#39;000000000840003241679471&#39;</span>),]</span>
-<span id="cb52-4"><a href="smartfeeder-api.html#cb52-4" tabindex="-1"></a>d.PrevDayFE[, DaySec <span class="sc">:=</span> <span class="fu">hour</span>(StartTime)<span class="sc">*</span><span class="dv">3600</span> <span class="sc">+</span> <span class="fu">minute</span>(StartTime)<span class="sc">*</span><span class="dv">60</span> <span class="sc">+</span> <span class="fu">second</span>(StartTime)]</span>
-<span id="cb52-5"><a href="smartfeeder-api.html#cb52-5" tabindex="-1"></a></span>
-<span id="cb52-6"><a href="smartfeeder-api.html#cb52-6" tabindex="-1"></a><span class="fu">setorder</span>(d.PrevDayFE,<span class="at">cols =</span> <span class="st">&#39;RFID&#39;</span>,<span class="st">&#39;DaySec&#39;</span>)</span>
-<span id="cb52-7"><a href="smartfeeder-api.html#cb52-7" tabindex="-1"></a>d.PrevDayFE[, cumDMI <span class="sc">:=</span> <span class="fu">cumsum</span>(IntakeKG), by <span class="ot">=</span> <span class="st">&#39;RFID&#39;</span>]</span>
-<span id="cb52-8"><a href="smartfeeder-api.html#cb52-8" tabindex="-1"></a></span>
-<span id="cb52-9"><a href="smartfeeder-api.html#cb52-9" tabindex="-1"></a>p.CumIntakeDaily <span class="ot">=</span> d.PrevDayFE <span class="sc">%&gt;%</span> </span>
-<span id="cb52-10"><a href="smartfeeder-api.html#cb52-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.POSIXct</span>(StartTime), <span class="at">y =</span> cumDMI,<span class="at">color =</span> RFID))<span class="sc">+</span></span>
-<span id="cb52-11"><a href="smartfeeder-api.html#cb52-11" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb52-12"><a href="smartfeeder-api.html#cb52-12" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb52-13"><a href="smartfeeder-api.html#cb52-13" tabindex="-1"></a>  <span class="fu">scale_x_datetime</span>(<span class="at">date_labels =</span> <span class="st">&quot;%H:%M&quot;</span>)<span class="sc">+</span></span>
-<span id="cb52-14"><a href="smartfeeder-api.html#cb52-14" tabindex="-1"></a>  <span class="co"># facet_wrap(~RFID, scales = &#39;free&#39;)+</span></span>
-<span id="cb52-15"><a href="smartfeeder-api.html#cb52-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time, hour&#39;</span>,</span>
-<span id="cb52-16"><a href="smartfeeder-api.html#cb52-16" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Cumulative Intake, kg&#39;</span>)<span class="sc">+</span></span>
-<span id="cb52-17"><a href="smartfeeder-api.html#cb52-17" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb52-18"><a href="smartfeeder-api.html#cb52-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">size =</span> <span class="fl">0.1</span>),</span>
-<span id="cb52-19"><a href="smartfeeder-api.html#cb52-19" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">size =</span> <span class="fl">0.05</span>),</span>
-<span id="cb52-20"><a href="smartfeeder-api.html#cb52-20" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb52-21"><a href="smartfeeder-api.html#cb52-21" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb52-22"><a href="smartfeeder-api.html#cb52-22" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb52-23"><a href="smartfeeder-api.html#cb52-23" tabindex="-1"></a>p.CumIntakeDaily  </span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="smartfeeder-api.html#cb48-1" tabindex="-1"></a><span class="co"># Cumulate daily intake -----</span></span>
+<span id="cb48-2"><a href="smartfeeder-api.html#cb48-2" tabindex="-1"></a>d.sfeed</span></code></pre></div>
+<pre><code>##         FeederID                     RFID           StartTime             EndTime Duration StartMassKG
+##           &lt;char&gt;                   &lt;char&gt;              &lt;char&gt;              &lt;char&gt;   &lt;char&gt;      &lt;char&gt;
+##      1:    10818 000000000840003252605896 2023-03-14 18:00:29 2023-03-14 18:02:42      133     121.708
+##      2:    10818 000000000840003252605892 2023-03-14 18:08:33 2023-03-14 18:21:39      786     121.247
+##      3:    10818 000000000840003252605896 2023-03-14 18:21:39 2023-03-14 18:28:08      389      118.65
+##      4:    10818 000000000840003241679559 2023-03-14 18:58:44 2023-03-14 19:05:44      420     114.214
+##      5:    10818 000000000840003241679617 2023-03-14 19:05:44 2023-03-14 19:09:48      244     113.067
+##     ---                                                                                               
+## 132895:    10822 000000000840003241679458 2023-07-17 20:22:54 2023-07-17 20:26:41      227      30.739
+## 132896:    10822 000000000840003241679454 2023-07-17 20:26:41 2023-07-17 20:29:55      194       30.31
+## 132897:    10822 000000000840003241679450 2023-07-17 20:30:24 2023-07-17 20:34:13      229        29.8
+## 132898:    10822 000000000840003241679452 2023-07-17 20:35:02 2023-07-17 20:44:16      554      29.223
+## 132899:                                                                                               
+##         EndMassKG IntakeKG FeedTypeNum WarningCode WarningMsg       Date RFIDTag
+##            &lt;char&gt;   &lt;char&gt;      &lt;char&gt;      &lt;char&gt;     &lt;char&gt;     &lt;Date&gt;  &lt;char&gt;
+##      1:   121.222    0.486           1           0            2023-03-14  605896
+##      2:    118.65    2.597           1           0            2023-03-14  605892
+##      3:   118.199     0.45           1           0            2023-03-14  605896
+##      4:   113.067    1.146           1           0            2023-03-14  679559
+##      5:   111.937    1.131           1           0            2023-03-14  679617
+##     ---                                                                         
+## 132895:     30.31    0.429           1           0            2023-07-17  679458
+## 132896:      29.8     0.51           1           0            2023-07-17  679454
+## 132897:    29.177    0.623           1           0            2023-07-17  679450
+## 132898:    29.101    0.123           1           0            2023-07-17  679452
+## 132899:                                                             &lt;NA&gt;</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="smartfeeder-api.html#cb50-1" tabindex="-1"></a>d.PrevDayFE <span class="ot">=</span> d.sfeed[Date <span class="sc">==</span> <span class="fu">as.character</span>(<span class="st">&#39;2023-07-01&#39;</span>) <span class="sc">&amp;</span> RFID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;000000000840003241680417&#39;</span>,</span>
+<span id="cb50-2"><a href="smartfeeder-api.html#cb50-2" tabindex="-1"></a>                                                                    <span class="st">&#39;000000000840003241679459&#39;</span>,</span>
+<span id="cb50-3"><a href="smartfeeder-api.html#cb50-3" tabindex="-1"></a>                                                                    <span class="st">&#39;000000000840003241679471&#39;</span>),]</span>
+<span id="cb50-4"><a href="smartfeeder-api.html#cb50-4" tabindex="-1"></a>d.PrevDayFE[, DaySec <span class="sc">:=</span> <span class="fu">hour</span>(StartTime)<span class="sc">*</span><span class="dv">3600</span> <span class="sc">+</span> <span class="fu">minute</span>(StartTime)<span class="sc">*</span><span class="dv">60</span> <span class="sc">+</span> <span class="fu">second</span>(StartTime)]</span>
+<span id="cb50-5"><a href="smartfeeder-api.html#cb50-5" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="smartfeeder-api.html#cb50-6" tabindex="-1"></a><span class="fu">setorder</span>(d.PrevDayFE,<span class="at">cols =</span> <span class="st">&#39;RFID&#39;</span>,<span class="st">&#39;DaySec&#39;</span>)</span>
+<span id="cb50-7"><a href="smartfeeder-api.html#cb50-7" tabindex="-1"></a>d.PrevDayFE[, cumDMI <span class="sc">:=</span> <span class="fu">cumsum</span>(IntakeKG), by <span class="ot">=</span> <span class="st">&#39;RFID&#39;</span>]</span>
+<span id="cb50-8"><a href="smartfeeder-api.html#cb50-8" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="smartfeeder-api.html#cb50-9" tabindex="-1"></a>p.CumIntakeDaily <span class="ot">=</span> d.PrevDayFE <span class="sc">%&gt;%</span> </span>
+<span id="cb50-10"><a href="smartfeeder-api.html#cb50-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.POSIXct</span>(StartTime), <span class="at">y =</span> cumDMI,<span class="at">color =</span> RFID))<span class="sc">+</span></span>
+<span id="cb50-11"><a href="smartfeeder-api.html#cb50-11" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb50-12"><a href="smartfeeder-api.html#cb50-12" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb50-13"><a href="smartfeeder-api.html#cb50-13" tabindex="-1"></a>  <span class="fu">scale_x_datetime</span>(<span class="at">date_labels =</span> <span class="st">&quot;%H:%M&quot;</span>)<span class="sc">+</span></span>
+<span id="cb50-14"><a href="smartfeeder-api.html#cb50-14" tabindex="-1"></a>  <span class="co"># facet_wrap(~RFID, scales = &#39;free&#39;)+</span></span>
+<span id="cb50-15"><a href="smartfeeder-api.html#cb50-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time, hour&#39;</span>,</span>
+<span id="cb50-16"><a href="smartfeeder-api.html#cb50-16" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Cumulative Intake, kg&#39;</span>)<span class="sc">+</span></span>
+<span id="cb50-17"><a href="smartfeeder-api.html#cb50-17" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb50-18"><a href="smartfeeder-api.html#cb50-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">size =</span> <span class="fl">0.1</span>),</span>
+<span id="cb50-19"><a href="smartfeeder-api.html#cb50-19" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">size =</span> <span class="fl">0.05</span>),</span>
+<span id="cb50-20"><a href="smartfeeder-api.html#cb50-20" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb50-21"><a href="smartfeeder-api.html#cb50-21" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb50-22"><a href="smartfeeder-api.html#cb50-22" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb50-23"><a href="smartfeeder-api.html#cb50-23" tabindex="-1"></a>p.CumIntakeDaily  </span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 
 </div>
@@ -589,7 +573,7 @@ Next, we can quickly plot some of these behaviors.</p>
         </div>
       </div>
 <a href="smartscale-api.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="automating-api-reports.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
